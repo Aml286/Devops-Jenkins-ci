@@ -19,6 +19,7 @@ pipeline {
         ARTVERSION = "${env.BUILD_ID}"
         NEXUS_IP = "172.31.30.137"
         NEXUS_PORT = "8081"
+        NEXUS_PASS = "admin"
     }
 
     stages {
