@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         maven "MAVEN3"
-        jdk   "OracleJDK8"
+        jdk "OracleJDK8"
     }
 
     environment {
@@ -24,13 +24,29 @@ pipeline {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
+            post {
+                success {
+                    echo 'Now Archiving...'
+                    archiveArtifacts artifacts: '**/target/*.war'
+                }
+            }
         }
-    }
 
-    post {
-        success {
-            echo 'Now Archiving...'
-            archiveArtifacts artifacts: '**/target/*.war'
+        stage('UNIT TEST') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('CODE ANALYSIS WITH CHECKSTYLE') {
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+            post {
+                success {
+                    echo 'Generated Analysis Result'
+                }
+            }
         }
     }
 }
