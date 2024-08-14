@@ -17,6 +17,8 @@ pipeline {
         NEXUS_REPO_ID = "vprofile-release"
         NEXUS_CREDENTIAL_ID = "nexuslogin"
         ARTVERSION = "${env.BUILD_ID}"
+        NEXUS_IP = "172.31.30.137"
+        NEXUS_PORT = "8081"
     }
 
     stages {
