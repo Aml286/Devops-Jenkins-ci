@@ -57,7 +57,6 @@ pipeline {
             environment {
                 scannerHome = tool 'SONARSCANNER'
             }
-
             steps {
                 withSonarQubeEnv('sonarserver') {
                     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
@@ -69,8 +68,13 @@ pipeline {
                         -Dsonar.jacoco.reportsPath=target/jacoco.exec \
                         -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
                 }
-                timeout(time: 10, unit: 'MINUTES') {
-               waitForQualityGate abortPipeline: true
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
