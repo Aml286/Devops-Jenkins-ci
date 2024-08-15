@@ -16,7 +16,7 @@ pipeline {
         NEXUS_REPOSITORY = "vprofile-release"
         NEXUS_REPO_ID = "vprofile-release"
         NEXUS_CREDENTIAL_ID = "nexuslogin"
-        ARTVERSION = "${env.BUILD_ID}"
+        ARTVERSION = "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}"
         NEXUS_IP = "172.31.30.137"
         NEXUS_PORT = "8081"
         SONARSERVER = "sonarserver"
@@ -69,6 +69,26 @@ pipeline {
                         -Dsonar.jacoco.reportsPath=target/jacoco.exec \
                         -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
                 }
+            }
+        }
+
+        stage('Publish to Nexus Repository Manager') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: "${NEXUS_VERSION}",
+                    protocol: "${NEXUS_PROTOCOL}",
+                    nexusUrl: "${NEXUS_URL}",
+                    groupId: "QA",
+                    version: "${ARTVERSION}",
+                    repository: "${NEXUS_REPOSITORY}",
+                    credentialsId: "${NEXUS_CREDENTIAL_ID}",
+                    artifacts: [
+                        [artifactId: 'vproapp',
+                         classifier: '',
+                         file: 'target/vprofile-v2.war',
+                         type: 'war']
+                    ]
+                )
             }
         }
     }
