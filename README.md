@@ -6,18 +6,26 @@
 - MySQL 5.6 or later
 
 ### Technologies 
-- Spring MVC
-- Spring Security
-- Spring Data JPA
+- AWS
+- Nexus
+- SonarQube
 - Maven
-- JSP
+- Jenkins
 - MySQL
-### Database
-Here,we used Mysql DB 
-MSQL DB Installation Steps for Linux ubuntu 14.04:
-- $ sudo apt-get update
-- $ sudo apt-get install mysql-server
+- Postgress
+### Steps:
+1. Login to AWS Account 2. Create key pair
+3. Create Security Group
+a. Jenkins, Nexus & Sonarqube
+4. Create Ec2 Instances with userdata a. Jenkins, Nexus & Sonarqube
+5. Post installation
+a. Jenkins setup & plugins
+b. Nexus setup & repository setup c. Sonarqube login test
+6. Git
+a. Create a github repository & migrate code b. Integrate github repo with VsCode and test it
+7. Build Job with Nexus integration
+8. Github Webhook
+9. Sonarqube server integration stage
+10. Nexus Artifact upload stage
+11. Slack Notification
 
-Then look for the file :
-- /src/main/resources/accountsdb
-- accountsdb.sql file is a mysql dump file.we have to import this dump to mysql db server
