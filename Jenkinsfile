@@ -77,6 +77,14 @@ pipeline {
             }
         }
 
+        stage('Sonarqube Quality Gate') {
+           steps {
+              timeout(time: 1, unit: 'HOURS') {
+               waitForQualityGate abortPipeline: true
+              }
+            }
+        }
+
         stage('Publish to Nexus Repository Manager') {
             steps {
                 nexusArtifactUploader(
